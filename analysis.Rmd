@@ -55,6 +55,7 @@ panderOptions("table.split.table", Inf)
 responses <- read_csv("survey_responses.csv")
 rank_factors <- read_csv("ranking_factors.csv")
 scores <- read_csv("interview_interaction_scores.csv")
+mh_factors <- read_csv("mh_ranking_factors.csv")
 ```
 
 ### Question 1
@@ -73,15 +74,24 @@ print(results)
 ### Question 2
 
 ```{r question2}
-rank_factors <- mutate(rank_factors, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
+results <- mutate(rank_factors, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE)))) 
 
-results <- ggplot(data = rank_factors, aes(x = factor(1), fill = ResponseType)) +
+mh_labs <- rank_factors %>%
+    group_by(ResponseType) %>%
+    summarize(num = n()) %>%
+    arrange(desc(num)) %>% 
+    mutate(ylab = paste0(round((num / cumsum(num) * 100), 1), "%"),
+           yval = cumsum(num) - num / 2)
+
+results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
     geom_bar(width = 1, color = "black") +
+    geom_text(data = mh_labs, aes(x = factor(1), y = yval, label = ylab)) +
     coord_polar(theta = "y") +
     xlab("") +
     ylab("") +
     ggtitle("Factors that influenced ranking decisions") +
-    labs(fill = "Response Category")
+    labs(fill = "Response Category") +
+    theme(axis.text.x = element_blank()) 
 
 print(results)
 ```
@@ -91,7 +101,7 @@ print(results)
 **Ratings of each component of the interview day**
 
 ```{r question3}
-scores <- mutate(scores, Score = ordered(Score, levels = c("Poor", "Below Average", "Average", "Above Average", "Excellent")),
+results <- mutate(scores, Score = ordered(Score, levels = c("Poor", "Below Average", "Average", "Above Average", "Excellent")),
                  Attribute = str_replace_all(Attribute, " interactions", ""),
                  Attribute = str_replace_all(Attribute, "Residency Program Director", "RPD"),
                  Attribute = str_replace_all(Attribute, "Multiple Mini Interviews", "MMI"))
@@ -103,7 +113,7 @@ scores <- mutate(scores, Score = ordered(Score, levels = c("Poor", "Below Averag
 #     spread(Score, Value, fill = FALSE) %>%
 #     summarize_each(funs(sum, mean), Poor:Excellent)
 
-attributes <- CreateTableOne(data = scores, strata = "Attribute", vars = "Score", test = FALSE)
+attributes <- CreateTableOne(data = results, strata = "Attribute", vars = "Score", test = FALSE)
 results <- print(attributes, printToggle = FALSE)
 pander(results)
 ```
@@ -131,6 +141,31 @@ results <- filter(responses, Question == 5) %>%
     xlab("Response") +
     ylab("Number of Candidates") +
     ggtitle("Where our program was ranked") 
+
+print(results)
+```
+
+### Question 6
+
+```{r question6}
+results <- mutate(mh_factors, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
+
+mh_labs <- mh_factors %>%
+    group_by(ResponseType) %>%
+    summarize(num = n()) %>%
+    arrange(desc(num)) %>% 
+    mutate(ylab = paste0(round((num / cumsum(num) * 100), 1), "%"),
+           yval = cumsum(num) - num / 2)
+
+results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
+    geom_bar(width = 1, color = "black") +
+    geom_text(data = mh_labs, aes(x = factor(1), y = yval, label = ylab)) +
+    coord_polar(theta = "y") +
+    xlab("") +
+    ylab("") +
+    ggtitle("Factors that caused us to be ranked lower than first") +
+    labs(fill = "Response Category") +
+    theme(axis.text.x = element_blank()) 
 
 print(results)
 ```
