@@ -218,10 +218,171 @@ div.tocify {
 <div id="survey" class="section level2">
 <h2>Survey</h2>
 <p>The survey was conducted in March 2016 via SurveyMonkey. The survey was sent to all 35 candidates who interviewed for the PGY1 Pharmacy Residency for the 2016-2017 residency year. There were 29 candidates who completed the survey, for a response rate of 82.9%.</p>
+</div>
+<div id="questions" class="section level2">
+<h2>Questions</h2>
+<p>Candidates were asked the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>When researching residency programs, how did you first learn about the PGY1 residency program at Memorial Hermann-Texas Medical Center?</li>
+<li>What factors were most important to you when deciding what order to rank residency programs?</li>
+<li>How would you rate each of these components of your interview day at Memorial Hermann-Texas Medical Center? (Each item was rated using a Likert scale of: Poor, Below Average, Average, Above Average, Excellent)
+<ol style="list-style-type: lower-alpha">
+<li>Residency Program Director interactions</li>
+<li>Preceptor interactions</li>
+<li>Resident interactions</li>
+<li>Multiple Mini Interviews</li>
+<li>Lunch</li>
+<li>Tour</li>
+</ol></li>
+<li>Did the use of the Multiple Mini Interview format influence the way you ranked the residency program at Memorial Hermann-Texas Medical Center?
+<ol style="list-style-type: lower-alpha">
+<li>Yes, I ranked the program higher</li>
+<li>Yes, I ranked the program lower</li>
+<li>Yes, I did not rank the program because of the MMI scenarios</li>
+<li>No, it did not affect how I ranked the program</li>
+</ol></li>
+<li>Where did you rank Memorial Hermann-Texas Medical Center?
+<ol style="list-style-type: lower-alpha">
+<li>First Choice</li>
+<li>Second Choice</li>
+<li>Third Choice or Below</li>
+<li>Did Not Rank</li>
+</ol></li>
+<li>If Memorial Hermann-Texas Medical Center was not your first choice, what was the primary reason (or reasons) why?</li>
+<li>Please provide any suggestions you have to improve the interview process at Memorial Hermann-Texas Medical Center for next year’s residency candidates.</li>
+</ol>
+</div>
+<div id="results" class="section level2">
+<h2>Results</h2>
 <pre class="r"><code>library(readr)
-
-responses &lt;- read_csv(&quot;survey_responses.csv&quot;)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(tableone)
+library(pander)
+panderOptions(&quot;table.split.table&quot;, Inf)</code></pre>
+<pre class="r"><code>responses &lt;- read_csv(&quot;survey_responses.csv&quot;)
 scores &lt;- read_csv(&quot;interview_interaction_scores.csv&quot;)</code></pre>
+<div id="question-1" class="section level3">
+<h3>Question 1</h3>
+<pre class="r"><code>results &lt;- filter(responses, Question == 1) %&gt;%
+    ggplot(aes(x = ShortAnswer)) +
+    geom_bar(fill = &quot;blue&quot;) +
+    xlab(&quot;Response Category&quot;) +
+    ggtitle(&quot;How candidates found out about our program&quot;)
+
+print(results)</code></pre>
+<p><img src="data:image/png;base64,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" alt /><!-- --></p>
+</div>
+<div id="question-2" class="section level3">
+<h3>Question 2</h3>
+</div>
+<div id="question-3" class="section level3">
+<h3>Question 3</h3>
+<pre class="r"><code>scores &lt;- mutate(scores, Score = ordered(Score, levels = c(&quot;Poor&quot;, &quot;Below Average&quot;, &quot;Average&quot;, &quot;Above Average&quot;, &quot;Excellent&quot;)),
+                 Attribute = str_replace_all(Attribute, &quot; interactions&quot;, &quot;&quot;),
+                 Attribute = str_replace_all(Attribute, &quot;Residency Program Director&quot;, &quot;RPD&quot;),
+                 Attribute = str_replace_all(Attribute, &quot;Multiple Mini Interviews&quot;, &quot;MMI&quot;))
+
+candidate.results &lt;- spread(scores, Attribute, Score)
+
+attribute.results &lt;- mutate(scores, Value = TRUE) %&gt;%
+    group_by(Attribute) %&gt;%
+    spread(Score, Value, fill = FALSE) %&gt;%
+    summarize_each(funs(sum, mean), Poor:Excellent)
+
+attributes &lt;- CreateTableOne(data = scores, strata = &quot;Attribute&quot;, vars = &quot;Score&quot;, test = FALSE)
+results &lt;- print(attributes, printToggle = FALSE)
+pander(results)</code></pre>
+<table>
+<colgroup>
+<col width="24%"></col>
+<col width="12%"></col>
+<col width="12%"></col>
+<col width="14%"></col>
+<col width="13%"></col>
+<col width="12%"></col>
+<col width="12%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lunch</th>
+<th align="center">MMI</th>
+<th align="center">Preceptor</th>
+<th align="center">Resident</th>
+<th align="center">RPD</th>
+<th align="center">Tour</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>n</strong></td>
+<td align="center">29</td>
+<td align="center">29</td>
+<td align="center">29</td>
+<td align="center">29</td>
+<td align="center">29</td>
+<td align="center">29</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Score (%)</strong></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Poor</strong></td>
+<td align="center">0 ( 0.0)</td>
+<td align="center">0 ( 0.0)</td>
+<td align="center">0 ( 0.0)</td>
+<td align="center">1 ( 3.4)</td>
+<td align="center">0 ( 0.0)</td>
+<td align="center">1 ( 3.4)</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Below Average</strong></td>
+<td align="center">0 ( 0.0)</td>
+<td align="center">1 ( 3.4)</td>
+<td align="center">0 ( 0.0)</td>
+<td align="center">3 (10.3)</td>
+<td align="center">2 ( 6.9)</td>
+<td align="center">1 ( 3.4)</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Average</strong></td>
+<td align="center">15 (51.7)</td>
+<td align="center">8 (27.6)</td>
+<td align="center">7 (24.1)</td>
+<td align="center">4 (13.8)</td>
+<td align="center">10 (34.5)</td>
+<td align="center">6 (20.7)</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Above Average</strong></td>
+<td align="center">8 (27.6)</td>
+<td align="center">15 (51.7)</td>
+<td align="center">11 (37.9)</td>
+<td align="center">11 (37.9)</td>
+<td align="center">4 (13.8)</td>
+<td align="center">7 (24.1)</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Excellent</strong></td>
+<td align="center">6 (20.7)</td>
+<td align="center">5 (17.2)</td>
+<td align="center">11 (37.9)</td>
+<td align="center">10 (34.5)</td>
+<td align="center">13 (44.8)</td>
+<td align="center">14 (48.3)</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 

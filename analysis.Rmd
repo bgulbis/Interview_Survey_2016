@@ -12,10 +12,81 @@ output:
 
 The survey was conducted in March 2016 via SurveyMonkey. The survey was sent to all 35 candidates who interviewed for the PGY1 Pharmacy Residency for the 2016-2017 residency year. There were 29 candidates who completed the survey, for a response rate of `r round((29 / 35) * 100, 1)`%.
 
-```{r data}
-library(readr)
+## Questions
 
+Candidates were asked the following questions:
+
+1. When researching residency programs, how did you first learn about the PGY1 residency program at Memorial Hermann-Texas Medical Center?
+1. What factors were most important to you when deciding what order to rank residency programs?
+1. How would you rate each of these components of your interview day at Memorial Hermann-Texas Medical Center? (Each item was rated using a Likert scale of: Poor, Below Average, Average, Above Average, Excellent)
+    a. Residency Program Director interactions
+    a. Preceptor interactions
+    a. Resident interactions
+    a. Multiple Mini Interviews
+    a. Lunch
+    a. Tour
+1. Did the use of the Multiple Mini Interview format influence the way you ranked the residency program at Memorial Hermann-Texas Medical Center?
+    a. Yes, I ranked the program higher
+    a. Yes, I ranked the program lower
+    a. Yes, I did not rank the program because of the MMI scenarios
+    a. No, it did not affect how I ranked the program
+1. Where did you rank Memorial Hermann-Texas Medical Center?
+    a. First Choice
+    a. Second Choice
+    a. Third Choice or Below
+    a. Did Not Rank
+1. If Memorial Hermann-Texas Medical Center was not your first choice, what was the primary reason (or reasons) why?
+1. Please provide any suggestions you have to improve the interview process at Memorial Hermann-Texas Medical Center for next year's residency candidates.
+
+## Results
+
+```{r library, message=FALSE, results='asis'}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(tableone)
+library(pander)
+panderOptions("table.split.table", Inf)
+```
+
+```{r data}
 responses <- read_csv("survey_responses.csv")
 scores <- read_csv("interview_interaction_scores.csv")
+```
+
+### Question 1
+
+```{r question1}
+results <- filter(responses, Question == 1) %>%
+    ggplot(aes(x = ShortAnswer)) +
+    geom_bar(fill = "blue") +
+    xlab("Response Category") +
+    ggtitle("How candidates found out about our program")
+
+print(results)
+```
+
+### Question 2
+
+### Question 3
+
+```{r question3}
+scores <- mutate(scores, Score = ordered(Score, levels = c("Poor", "Below Average", "Average", "Above Average", "Excellent")),
+                 Attribute = str_replace_all(Attribute, " interactions", ""),
+                 Attribute = str_replace_all(Attribute, "Residency Program Director", "RPD"),
+                 Attribute = str_replace_all(Attribute, "Multiple Mini Interviews", "MMI"))
+
+# candidate.results <- spread(scores, Attribute, Score)
+# 
+# attribute.results <- mutate(scores, Value = TRUE) %>%
+#     group_by(Attribute) %>%
+#     spread(Score, Value, fill = FALSE) %>%
+#     summarize_each(funs(sum, mean), Poor:Excellent)
+
+attributes <- CreateTableOne(data = scores, strata = "Attribute", vars = "Score", test = FALSE)
+results <- print(attributes, printToggle = FALSE)
+pander(results)
 ```
 
