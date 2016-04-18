@@ -1,7 +1,16 @@
 ---
 title: "PGY1 Residency Interviews Feedback Survey"
-output: html_document
+output: 
+    html_document:
+        code_folding: hide
+        fig_caption: yes
+        toc: yes
+        toc_float: yes
 ---
+
+## Survey
+
+The survey was conducted in March 2016 via SurveyMonkey. The survey was sent to all 35 candidates who interviewed for the PGY1 Pharmacy Residency for the 2016-2017 residency year. There were 29 candidates who completed the survey, for a response rate of `r round((29 / 35) * 100, 1)`%.
 
 ```{r data}
 library(readr)
