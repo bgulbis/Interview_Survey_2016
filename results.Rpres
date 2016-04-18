@@ -1,0 +1,187 @@
+PGY1 Residency Interviews Feedback Survey
+========================================================
+author: Brian Gulbis
+date: April 19, 2016
+autosize: true
+
+```{r global, echo=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+```
+
+Survey Overview
+========================================================
+
+* Survey was sent to all 35 candidates who interviewed
+* There were 29 candidates who completed the survey
+    - Response rate of `r round((29 / 35) * 100, 1)`%
+
+Questions Asked
+========================================================
+
+* When researching residency programs, how did you first learn about the PGY1 residency program at Memorial Hermann-Texas Medical Center?
+* What factors were most important to you when deciding what order to rank residency programs?
+* How would you rate each of these components of your interview day?
+    - Residency Program Director interactions
+    - Preceptor interactions
+    - Resident interactions
+    - Multiple Mini Interviews
+    - Lunch
+    - Tour
+
+Questions Asked
+========================================================
+
+* Did the use of the Multiple Mini Interview format influence the way you ranked our residency program?
+* Where did you rank Memorial Hermann-Texas Medical Center?
+* If Memorial Hermann-Texas Medical Center was not your first choice, what was the primary reason (or reasons) why?
+* Please provide any suggestions you have to improve the interview process at Memorial Hermann-Texas Medical Center for next year's residency candidates.
+
+Question 1
+========================================================
+```{r library, message=FALSE, results='asis'}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(tableone)
+library(pander)
+# panderOptions("table.split.table", Inf)
+responses <- read_csv("survey_responses.csv")
+rank_factors <- read_csv("ranking_factors.csv")
+scores <- read_csv("interview_interaction_scores.csv")
+mh_factors <- read_csv("mh_ranking_factors.csv")
+recs <- read_csv("recommendations.csv")
+```
+
+```{r question1}
+results <- filter(responses, Question == 1) %>%
+    ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
+    geom_bar(fill = "blue") +
+    xlab("Response Category") +
+    ylab("Number of Candidates") +
+    ggtitle("How candidates found out about our program")
+
+print(results)
+```
+
+Question 2
+========================================================
+
+```{r question2}
+results <- mutate(rank_factors, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
+
+mh_labs <- rank_factors %>%
+    group_by(ResponseType) %>%
+    summarize(num = n()) %>%
+    arrange(desc(num)) %>%
+    mutate(ylab = paste0(round((num / sum(num) * 100), 1), "%"),
+           yval = cumsum(num) - num / 2)
+
+results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
+    geom_bar(width = 1, color = "black") +
+    geom_text(data = mh_labs, aes(x = factor(1), y = yval, label = ylab)) +
+    coord_polar(theta = "y") +
+    xlab("") +
+    ylab("") +
+    ggtitle("Factors that influenced ranking decisions") +
+    labs(fill = "Response Category") +
+    theme(axis.text.x = element_blank())
+
+print(results)
+```
+
+Question 3
+========================================================
+**Ratings of each component of the interview day**
+
+```{r question3, results='asis'}
+results <- mutate(scores, Score = ordered(Score, levels = c("Poor", "Below Average", "Average", "Above Average", "Excellent")),
+                 Attribute = str_replace_all(Attribute, " interactions", ""),
+                 Attribute = str_replace_all(Attribute, "Residency Program Director", "RPD"),
+                 Attribute = str_replace_all(Attribute, "Multiple Mini Interviews", "MMI"))
+
+attributes <- CreateTableOne(data = results, strata = "Attribute", vars = "Score", test = FALSE)
+results <- print(attributes, printToggle = FALSE)
+knitr::kable(results)
+```
+
+Question 4
+========================================================
+```{r question4}
+results <- filter(responses, Question == 4) %>%
+    mutate(ShortAnswer = str_replace_all(ShortAnswer, "No, it did not affect how I ranked the program", "No affect"),
+           ShortAnswer = str_replace_all(ShortAnswer, "Yes, I ranked the program higher", "Higher"),
+           ShortAnswer = str_replace_all(ShortAnswer, "Yes, I ranked the program lower", "Lower"),
+           ShortAnswer = str_replace_all(ShortAnswer, "Yes, I did not rank the program because of the MMI scenarios", "Did not rank")) %>%
+    ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
+    geom_bar(fill = "blue") +
+    xlab("Response") +
+    ylab("Number of Candidates") +
+    ggtitle("MMI influence on program ranking")
+
+print(results)
+```
+
+Question 5
+========================================================
+```{r question5}
+results <- filter(responses, Question == 5) %>%
+    ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
+    geom_bar(fill = "blue") +
+    xlab("Response") +
+    ylab("Number of Candidates") +
+    ggtitle("Where our program was ranked")
+
+print(results)
+```
+
+Question 6
+========================================================
+```{r question6}
+results <- mutate(mh_factors, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
+
+mh_labs <- mh_factors %>%
+    group_by(ResponseType) %>%
+    summarize(num = n()) %>%
+    arrange(desc(num)) %>%
+    mutate(ylab = paste0(round((num / sum(num) * 100), 1), "%"),
+           yval = cumsum(num) - num / 2)
+
+results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
+    geom_bar(width = 1, color = "black") +
+    geom_text(data = mh_labs, aes(x = factor(1), y = yval, label = ylab)) +
+    coord_polar(theta = "y") +
+    xlab("") +
+    ylab("") +
+    ggtitle("Factors that caused us to be ranked lower than first") +
+    labs(fill = "Response Category") +
+    theme(axis.text.x = element_blank())
+
+print(results)
+```
+
+Question 7
+========================================================
+```{r question7}
+results <- mutate(recs, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
+
+mh_labs <- recs %>%
+    group_by(ResponseType) %>%
+    summarize(num = n()) %>%
+    arrange(desc(num)) %>%
+    mutate(ylab = paste0(round((num / sum(num) * 100), 1), "%"),
+           yval = cumsum(num) - num / 2)
+
+results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
+    geom_bar(width = 1, color = "black") +
+    geom_text(data = mh_labs, aes(x = factor(1), y = yval, label = ylab)) +
+    coord_polar(theta = "y") +
+    xlab("") +
+    ylab("") +
+    ggtitle("Suggestions to improve the interview day") +
+    labs(fill = "Response Category") +
+    theme(axis.text.x = element_blank())
+
+print(results)
+```
