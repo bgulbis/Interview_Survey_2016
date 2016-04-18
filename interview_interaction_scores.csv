@@ -1,0 +1,175 @@
+Responder,Question,Atribute,Score
+1,3,Residency Program Director interactions,Average
+1,3,Preceptor interactions,Average
+1,3,Resident interactions,Average
+1,3,Multiple Mini Interviews,Average
+1,3,Lunch,Average
+1,3,Tour,Average
+2,3,Residency Program Director interactions,Excellent
+2,3,Preceptor interactions,Average
+2,3,Resident interactions,Excellent
+2,3,Multiple Mini Interviews,Excellent
+2,3,Lunch,Excellent
+2,3,Tour,Excellent
+3,3,Residency Program Director interactions,Average
+3,3,Preceptor interactions,Above Average
+3,3,Resident interactions,Above Average
+3,3,Multiple Mini Interviews,Average
+3,3,Lunch,Above Average
+3,3,Tour,Excellent
+4,3,Residency Program Director interactions,Average
+4,3,Preceptor interactions,Above Average
+4,3,Resident interactions,Above Average
+4,3,Multiple Mini Interviews,Above Average
+4,3,Lunch,Average
+4,3,Tour,Above Average
+5,3,Residency Program Director interactions,Excellent
+5,3,Preceptor interactions,Excellent
+5,3,Resident interactions,Above Average
+5,3,Multiple Mini Interviews,Above Average
+5,3,Lunch,Above Average
+5,3,Tour,Excellent
+6,3,Residency Program Director interactions,Excellent
+6,3,Preceptor interactions,Excellent
+6,3,Resident interactions,Excellent
+6,3,Multiple Mini Interviews,Excellent
+6,3,Lunch,Above Average
+6,3,Tour,Excellent
+7,3,Residency Program Director interactions,Average
+7,3,Preceptor interactions,Above Average
+7,3,Resident interactions,Below Average
+7,3,Multiple Mini Interviews,Below Average
+7,3,Lunch,Excellent
+7,3,Tour,Excellent
+8,3,Residency Program Director interactions,Above Average
+8,3,Preceptor interactions,Above Average
+8,3,Resident interactions,Above Average
+8,3,Multiple Mini Interviews,Above Average
+8,3,Lunch,Above Average
+8,3,Tour,Excellent
+9,3,Residency Program Director interactions,Excellent
+9,3,Preceptor interactions,Excellent
+9,3,Resident interactions,Excellent
+9,3,Multiple Mini Interviews,Above Average
+9,3,Lunch,Excellent
+9,3,Tour,Excellent
+10,3,Residency Program Director interactions,Below Average
+10,3,Preceptor interactions,Average
+10,3,Resident interactions,Above Average
+10,3,Multiple Mini Interviews,Above Average
+10,3,Lunch,Average
+10,3,Tour,Above Average
+11,3,Residency Program Director interactions,Excellent
+11,3,Preceptor interactions,Above Average
+11,3,Resident interactions,Excellent
+11,3,Multiple Mini Interviews,Average
+11,3,Lunch,Above Average
+11,3,Tour,Excellent
+12,3,Residency Program Director interactions,Excellent
+12,3,Preceptor interactions,Excellent
+12,3,Resident interactions,Excellent
+12,3,Multiple Mini Interviews,Above Average
+12,3,Lunch,Excellent
+12,3,Tour,Excellent
+13,3,Residency Program Director interactions,Excellent
+13,3,Preceptor interactions,Excellent
+13,3,Resident interactions,Excellent
+13,3,Multiple Mini Interviews,Excellent
+13,3,Lunch,Excellent
+13,3,Tour,Excellent
+14,3,Residency Program Director interactions,Average
+14,3,Preceptor interactions,Above Average
+14,3,Resident interactions,Average
+14,3,Multiple Mini Interviews,Average
+14,3,Lunch,Average
+14,3,Tour,Above Average
+15,3,Residency Program Director interactions,Excellent
+15,3,Preceptor interactions,Above Average
+15,3,Resident interactions,Above Average
+15,3,Multiple Mini Interviews,Average
+15,3,Lunch,Average
+15,3,Tour,Average
+16,3,Residency Program Director interactions,Above Average
+16,3,Preceptor interactions,Excellent
+16,3,Resident interactions,Excellent
+16,3,Multiple Mini Interviews,Average
+16,3,Lunch,Average
+16,3,Tour,Excellent
+17,3,Residency Program Director interactions,Average
+17,3,Preceptor interactions,Average
+17,3,Resident interactions,Below Average
+17,3,Multiple Mini Interviews,Above Average
+17,3,Lunch,Average
+17,3,Tour,Average
+18,3,Residency Program Director interactions,Average
+18,3,Preceptor interactions,Average
+18,3,Resident interactions,Above Average
+18,3,Multiple Mini Interviews,Above Average
+18,3,Lunch,Average
+18,3,Tour,Average
+19,3,Residency Program Director interactions,Excellent
+19,3,Preceptor interactions,Excellent
+19,3,Resident interactions,Excellent
+19,3,Multiple Mini Interviews,Excellent
+19,3,Lunch,Excellent
+19,3,Tour,Excellent
+20,3,Residency Program Director interactions,Excellent
+20,3,Preceptor interactions,Excellent
+20,3,Resident interactions,Above Average
+20,3,Multiple Mini Interviews,Above Average
+20,3,Lunch,Average
+20,3,Tour,Excellent
+21,3,Residency Program Director interactions,Above Average
+21,3,Preceptor interactions,Excellent
+21,3,Resident interactions,Above Average
+21,3,Multiple Mini Interviews,Average
+21,3,Lunch,Average
+21,3,Tour,Above Average
+22,3,Residency Program Director interactions,Average
+22,3,Preceptor interactions,Above Average
+22,3,Resident interactions,Excellent
+22,3,Multiple Mini Interviews,Above Average
+22,3,Lunch,Average
+22,3,Tour,Above Average
+23,3,Residency Program Director interactions,Excellent
+23,3,Preceptor interactions,Above Average
+23,3,Resident interactions,Average
+23,3,Multiple Mini Interviews,Excellent
+23,3,Lunch,Above Average
+23,3,Tour,Average
+24,3,Residency Program Director interactions,Excellent
+24,3,Preceptor interactions,Excellent
+24,3,Resident interactions,Excellent
+24,3,Multiple Mini Interviews,Above Average
+24,3,Lunch,Above Average
+24,3,Tour,Above Average
+25,3,Residency Program Director interactions,Average
+25,3,Preceptor interactions,Average
+25,3,Resident interactions,Average
+25,3,Multiple Mini Interviews,Above Average
+25,3,Lunch,Average
+25,3,Tour,Above Average
+26,3,Residency Program Director interactions,Average
+26,3,Preceptor interactions,Average
+26,3,Resident interactions,Above Average
+26,3,Multiple Mini Interviews,Above Average
+26,3,Lunch,Average
+26,3,Tour,Average
+27,3,Residency Program Director interactions,Above Average
+27,3,Preceptor interactions,Above Average
+27,3,Resident interactions,Below Average
+27,3,Multiple Mini Interviews,Above Average
+27,3,Lunch,Average
+27,3,Tour,Poor
+28,3,Residency Program Director interactions,Excellent
+28,3,Preceptor interactions,Excellent
+28,3,Resident interactions,Above Average
+28,3,Multiple Mini Interviews,Average
+28,3,Lunch,Above Average
+28,3,Tour,Excellent
+29,3,Residency Program Director interactions,Below Average
+29,3,Preceptor interactions,Above Average
+29,3,Resident interactions,Poor
+29,3,Multiple Mini Interviews,Above Average
+29,3,Lunch,Average
+29,3,Tour,Below Average
