@@ -53,6 +53,7 @@ panderOptions("table.split.table", Inf)
 
 ```{r data}
 responses <- read_csv("survey_responses.csv")
+rank_factors <- read_csv("ranking_factors.csv")
 scores <- read_csv("interview_interaction_scores.csv")
 ```
 
@@ -63,6 +64,7 @@ results <- filter(responses, Question == 1) %>%
     ggplot(aes(x = ShortAnswer)) +
     geom_bar(fill = "blue") +
     xlab("Response Category") +
+    ylab("Number of Candidates") +
     ggtitle("How candidates found out about our program")
 
 print(results)
@@ -70,7 +72,23 @@ print(results)
 
 ### Question 2
 
+```{r question2}
+rank_factors <- mutate(rank_factors, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
+
+results <- ggplot(data = rank_factors, aes(x = factor(1), fill = ResponseType)) +
+    geom_bar(width = 1, color = "black") +
+    coord_polar(theta = "y") +
+    xlab("") +
+    ylab("") +
+    ggtitle("Factors that influenced ranking decisions") +
+    labs(fill = "Response Category")
+
+print(results)
+```
+
 ### Question 3
+
+**Ratings of each component of the interview day**
 
 ```{r question3}
 scores <- mutate(scores, Score = ordered(Score, levels = c("Poor", "Below Average", "Average", "Above Average", "Excellent")),
@@ -88,5 +106,32 @@ scores <- mutate(scores, Score = ordered(Score, levels = c("Poor", "Below Averag
 attributes <- CreateTableOne(data = scores, strata = "Attribute", vars = "Score", test = FALSE)
 results <- print(attributes, printToggle = FALSE)
 pander(results)
+```
+
+### Question 4
+
+```{r question4}
+results <- filter(responses, Question == 4) %>%
+    ggplot(aes(x = ShortAnswer)) +
+    geom_bar(fill = "blue") +
+    xlab("Response") +
+    ylab("Number of Candidates") +
+    ggtitle("MMI influence on program ranking") +
+    scale_x_discrete(labels = c("No affect", "Did not rank", "Higher", "Lower"))
+
+print(results)
+```
+
+### Question 5
+
+```{r question5}
+results <- filter(responses, Question == 5) %>%
+    ggplot(aes(x = ShortAnswer)) +
+    geom_bar(fill = "blue") +
+    xlab("Response") +
+    ylab("Number of Candidates") +
+    ggtitle("Where our program was ranked") 
+
+print(results)
 ```
 
