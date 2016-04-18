@@ -63,11 +63,12 @@ recs <- read_csv("recommendations.csv")
 
 ```{r question1}
 results <- filter(responses, Question == 1) %>%
+    mutate(ShortAnswer = str_replace_all(ShortAnswer, "Local / Looking at Houston", "Local / Houston")) %>%
     ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
-    xlab("Response Category") +
+    xlab("") +
     ylab("Number of Candidates") +
-    ggtitle("How candidates found out about our program")
+    ggtitle("How candidates found out about our program") 
 
 print(results)
 ```
@@ -122,7 +123,7 @@ results <- filter(responses, Question == 4) %>%
            ShortAnswer = str_replace_all(ShortAnswer, "Yes, I did not rank the program because of the MMI scenarios", "Did not rank")) %>%
     ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
-    xlab("Response") +
+    xlab("") +
     ylab("Number of Candidates") +
     ggtitle("MMI influence on program ranking") 
 
@@ -135,7 +136,7 @@ print(results)
 results <- filter(responses, Question == 5) %>%
     ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
-    xlab("Response") +
+    xlab("") +
     ylab("Number of Candidates") +
     ggtitle("Where our program was ranked") 
 

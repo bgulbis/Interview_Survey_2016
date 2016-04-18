@@ -38,6 +38,9 @@ Questions Asked
 
 Question 1
 ========================================================
+
+How candidates first heard about our program
+
 ```{r library, message=FALSE, results='asis'}
 library(readr)
 library(dplyr)
@@ -56,17 +59,19 @@ recs <- read_csv("recommendations.csv")
 
 ```{r question1}
 results <- filter(responses, Question == 1) %>%
+    mutate(ShortAnswer = str_replace_all(ShortAnswer, "Local / Looking at Houston", "Local / Houston")) %>%
     ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
-    xlab("Response Category") +
-    ylab("Number of Candidates") +
-    ggtitle("How candidates found out about our program")
+    xlab("") +
+    ylab("Number of Candidates")
 
 print(results)
 ```
 
 Question 2
 ========================================================
+
+Factors that influenced ranking decisions
 
 ```{r question2}
 results <- mutate(rank_factors, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
@@ -84,7 +89,7 @@ results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
     coord_polar(theta = "y") +
     xlab("") +
     ylab("") +
-    ggtitle("Factors that influenced ranking decisions") +
+    ggtitle("") +
     labs(fill = "Response Category") +
     theme(axis.text.x = element_blank())
 
@@ -93,7 +98,8 @@ print(results)
 
 Question 3
 ========================================================
-**Ratings of each component of the interview day**
+
+Ratings of each component of the interview day
 
 ```{r question3, results='asis'}
 results <- mutate(scores, Score = ordered(Score, levels = c("Poor", "Below Average", "Average", "Above Average", "Excellent")),
@@ -102,12 +108,16 @@ results <- mutate(scores, Score = ordered(Score, levels = c("Poor", "Below Avera
                  Attribute = str_replace_all(Attribute, "Multiple Mini Interviews", "MMI"))
 
 attributes <- CreateTableOne(data = results, strata = "Attribute", vars = "Score", test = FALSE)
-results <- print(attributes, printToggle = FALSE)
+results <- print(attributes, printToggle = FALSE, format = "p", catDigits = 0)
 knitr::kable(results)
+# pander(as.data.frame(results))
 ```
 
 Question 4
 ========================================================
+
+MMI influence on program ranking
+
 ```{r question4}
 results <- filter(responses, Question == 4) %>%
     mutate(ShortAnswer = str_replace_all(ShortAnswer, "No, it did not affect how I ranked the program", "No affect"),
@@ -116,28 +126,32 @@ results <- filter(responses, Question == 4) %>%
            ShortAnswer = str_replace_all(ShortAnswer, "Yes, I did not rank the program because of the MMI scenarios", "Did not rank")) %>%
     ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
-    xlab("Response") +
-    ylab("Number of Candidates") +
-    ggtitle("MMI influence on program ranking")
+    xlab("") +
+    ylab("Number of Candidates")
 
 print(results)
 ```
 
 Question 5
 ========================================================
+
+Where our program was ranked
+
 ```{r question5}
 results <- filter(responses, Question == 5) %>%
     ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
-    xlab("Response") +
-    ylab("Number of Candidates") +
-    ggtitle("Where our program was ranked")
+    xlab("") +
+    ylab("Number of Candidates")
 
 print(results)
 ```
 
 Question 6
 ========================================================
+
+Factors that caused us to be ranked lower than first
+
 ```{r question6}
 results <- mutate(mh_factors, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
 
@@ -154,7 +168,7 @@ results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
     coord_polar(theta = "y") +
     xlab("") +
     ylab("") +
-    ggtitle("Factors that caused us to be ranked lower than first") +
+    ggtitle("") +
     labs(fill = "Response Category") +
     theme(axis.text.x = element_blank())
 
@@ -163,6 +177,9 @@ print(results)
 
 Question 7
 ========================================================
+
+Suggestions to improve the interview day
+
 ```{r question7}
 results <- mutate(recs, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
 
@@ -179,7 +196,7 @@ results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
     coord_polar(theta = "y") +
     xlab("") +
     ylab("") +
-    ggtitle("Suggestions to improve the interview day") +
+    ggtitle("") +
     labs(fill = "Response Category") +
     theme(axis.text.x = element_blank())
 
