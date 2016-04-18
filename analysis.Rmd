@@ -56,6 +56,7 @@ responses <- read_csv("survey_responses.csv")
 rank_factors <- read_csv("ranking_factors.csv")
 scores <- read_csv("interview_interaction_scores.csv")
 mh_factors <- read_csv("mh_ranking_factors.csv")
+recs <- read_csv("recommendations.csv")
 ```
 
 ### Question 1
@@ -160,6 +161,31 @@ results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
     xlab("") +
     ylab("") +
     ggtitle("Factors that caused us to be ranked lower than first") +
+    labs(fill = "Response Category") +
+    theme(axis.text.x = element_blank()) 
+
+print(results)
+```
+
+### Question 7
+
+```{r question7}
+results <- mutate(recs, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
+
+mh_labs <- recs %>%
+    group_by(ResponseType) %>%
+    summarize(num = n()) %>%
+    arrange(desc(num)) %>% 
+    mutate(ylab = paste0(round((num / sum(num) * 100), 1), "%"),
+           yval = cumsum(num) - num / 2)
+
+results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
+    geom_bar(width = 1, color = "black") +
+    geom_text(data = mh_labs, aes(x = factor(1), y = yval, label = ylab)) +
+    coord_polar(theta = "y") +
+    xlab("") +
+    ylab("") +
+    ggtitle("Suggestions to improve the interview day") +
     labs(fill = "Response Category") +
     theme(axis.text.x = element_blank()) 
 
