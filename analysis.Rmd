@@ -1,0 +1,12 @@
+---
+title: "PGY1 Residency Interviews Feedback Survey"
+output: html_document
+---
+
+```{r data}
+library(readr)
+
+responses <- read_csv("survey_responses.csv")
+scores <- read_csv("interview_interaction_scores.csv")
+```
+
