@@ -37,41 +37,59 @@ Questions Asked
 Question 1
 ========================================================
 
+How candidates first heard about our program
+
+
 
 ![plot of chunk question1](results-figure/question1-1.png)
 
 Question 2
 ========================================================
 
+Factors that influenced ranking decisions
+
 ![plot of chunk question2](results-figure/question2-1.png)
 
 Question 3
 ========================================================
-**Ratings of each component of the interview day**
+
+Ratings of each component of the interview day
 
 
-|              |Lunch     |MMI       |Preceptor |Resident  |RPD       |Tour      |
-|:-------------|:---------|:---------|:---------|:---------|:---------|:---------|
-|n             |29        |29        |29        |29        |29        |29        |
-|Score (%)     |          |          |          |          |          |          |
-|Poor          |0 ( 0.0)  |0 ( 0.0)  |0 ( 0.0)  |1 ( 3.4)  |0 ( 0.0)  |1 ( 3.4)  |
-|Below Average |0 ( 0.0)  |1 ( 3.4)  |0 ( 0.0)  |3 (10.3)  |2 ( 6.9)  |1 ( 3.4)  |
-|Average       |15 (51.7) |8 (27.6)  |7 (24.1)  |4 (13.8)  |10 (34.5) |6 (20.7)  |
-|Above Average |8 (27.6)  |15 (51.7) |11 (37.9) |11 (37.9) |4 (13.8)  |7 (24.1)  |
-|Excellent     |6 (20.7)  |5 (17.2)  |11 (37.9) |10 (34.5) |13 (44.8) |14 (48.3) |
+|              |Lunch |MMI |Preceptor |Resident |RPD |Tour |
+|:-------------|:-----|:---|:---------|:--------|:---|:----|
+|n             |29    |29  |29        |29       |29  |29   |
+|Score (%)     |      |    |          |         |    |     |
+|Poor          |0     |0   |0         |3        |0   |3    |
+|Below Average |0     |3   |0         |10       |7   |3    |
+|Average       |52    |28  |24        |14       |34  |21   |
+|Above Average |28    |52  |38        |38       |14  |24   |
+|Excellent     |21    |17  |38        |34       |45  |48   |
 
 Question 4
 ========================================================
+
+MMI influence on program ranking
+
 ![plot of chunk question4](results-figure/question4-1.png)
 
 Question 5
 ========================================================
+
+Where our program was ranked
+
 ![plot of chunk question5](results-figure/question5-1.png)
 
 Question 6
 ========================================================
+
+Factors that caused us to be ranked lower than first
+
 ![plot of chunk question6](results-figure/question6-1.png)
 
 Question 7
 ========================================================
+
+Suggestions to improve the interview day
+
 ![plot of chunk question7](results-figure/question7-1.png)
