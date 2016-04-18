@@ -62,7 +62,7 @@ mh_factors <- read_csv("mh_ranking_factors.csv")
 
 ```{r question1}
 results <- filter(responses, Question == 1) %>%
-    ggplot(aes(x = ShortAnswer)) +
+    ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
     xlab("Response Category") +
     ylab("Number of Candidates") +
@@ -80,7 +80,7 @@ mh_labs <- rank_factors %>%
     group_by(ResponseType) %>%
     summarize(num = n()) %>%
     arrange(desc(num)) %>% 
-    mutate(ylab = paste0(round((num / cumsum(num) * 100), 1), "%"),
+    mutate(ylab = paste0(round((num / sum(num) * 100), 1), "%"),
            yval = cumsum(num) - num / 2)
 
 results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
@@ -106,13 +106,6 @@ results <- mutate(scores, Score = ordered(Score, levels = c("Poor", "Below Avera
                  Attribute = str_replace_all(Attribute, "Residency Program Director", "RPD"),
                  Attribute = str_replace_all(Attribute, "Multiple Mini Interviews", "MMI"))
 
-# candidate.results <- spread(scores, Attribute, Score)
-# 
-# attribute.results <- mutate(scores, Value = TRUE) %>%
-#     group_by(Attribute) %>%
-#     spread(Score, Value, fill = FALSE) %>%
-#     summarize_each(funs(sum, mean), Poor:Excellent)
-
 attributes <- CreateTableOne(data = results, strata = "Attribute", vars = "Score", test = FALSE)
 results <- print(attributes, printToggle = FALSE)
 pander(results)
@@ -122,12 +115,15 @@ pander(results)
 
 ```{r question4}
 results <- filter(responses, Question == 4) %>%
-    ggplot(aes(x = ShortAnswer)) +
+    mutate(ShortAnswer = str_replace_all(ShortAnswer, "No, it did not affect how I ranked the program", "No affect"),
+           ShortAnswer = str_replace_all(ShortAnswer, "Yes, I ranked the program higher", "Higher"),
+           ShortAnswer = str_replace_all(ShortAnswer, "Yes, I ranked the program lower", "Lower"),
+           ShortAnswer = str_replace_all(ShortAnswer, "Yes, I did not rank the program because of the MMI scenarios", "Did not rank")) %>%
+    ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
     xlab("Response") +
     ylab("Number of Candidates") +
-    ggtitle("MMI influence on program ranking") +
-    scale_x_discrete(labels = c("No affect", "Did not rank", "Higher", "Lower"))
+    ggtitle("MMI influence on program ranking") 
 
 print(results)
 ```
@@ -136,7 +132,7 @@ print(results)
 
 ```{r question5}
 results <- filter(responses, Question == 5) %>%
-    ggplot(aes(x = ShortAnswer)) +
+    ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
     xlab("Response") +
     ylab("Number of Candidates") +
@@ -154,7 +150,7 @@ mh_labs <- mh_factors %>%
     group_by(ResponseType) %>%
     summarize(num = n()) %>%
     arrange(desc(num)) %>% 
-    mutate(ylab = paste0(round((num / cumsum(num) * 100), 1), "%"),
+    mutate(ylab = paste0(round((num / sum(num) * 100), 1), "%"),
            yval = cumsum(num) - num / 2)
 
 results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
