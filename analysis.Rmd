@@ -117,7 +117,7 @@ pander(results)
 
 ```{r question4}
 results <- filter(responses, Question == 4) %>%
-    mutate(ShortAnswer = str_replace_all(ShortAnswer, "No, it did not affect how I ranked the program", "No affect"),
+    mutate(ShortAnswer = str_replace_all(ShortAnswer, "No, it did not affect how I ranked the program", "No effect"),
            ShortAnswer = str_replace_all(ShortAnswer, "Yes, I ranked the program higher", "Higher"),
            ShortAnswer = str_replace_all(ShortAnswer, "Yes, I ranked the program lower", "Lower"),
            ShortAnswer = str_replace_all(ShortAnswer, "Yes, I did not rank the program because of the MMI scenarios", "Did not rank")) %>%
