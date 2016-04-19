@@ -1,12 +1,19 @@
 ---
 title: "PGY1 Residency Interviews Feedback Survey"
-output: 
-    html_document:
-        code_folding: hide
-        fig_caption: yes
-        toc: yes
-        toc_float: yes
+output:
+  pdf_document:
+    fig_height: 4
+    fig_width: 5.3
+  html_document:
+    code_folding: hide
+    fig_caption: yes
+    toc: yes
+    toc_float: yes
 ---
+
+```{r global, echo=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
 ## Survey
 
@@ -61,19 +68,22 @@ recs <- read_csv("recommendations.csv")
 
 ### Question 1
 
+**How candidates found out about our program**
+
 ```{r question1}
 results <- filter(responses, Question == 1) %>%
     mutate(ShortAnswer = str_replace_all(ShortAnswer, "Local / Looking at Houston", "Local / Houston")) %>%
     ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
     xlab("") +
-    ylab("Number of Candidates") +
-    ggtitle("How candidates found out about our program") 
+    ylab("Number of Candidates") 
 
 print(results)
 ```
 
 ### Question 2
+
+**Factors that influenced ranking decisions**
 
 ```{r question2}
 results <- mutate(rank_factors, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE)))) 
@@ -91,7 +101,7 @@ results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
     coord_polar(theta = "y") +
     xlab("") +
     ylab("") +
-    ggtitle("Factors that influenced ranking decisions") +
+    ggtitle("") +
     labs(fill = "Response Category") +
     theme(axis.text.x = element_blank()) 
 
@@ -115,6 +125,8 @@ pander(results)
 
 ### Question 4
 
+**MMI influence on program ranking**
+
 ```{r question4}
 results <- filter(responses, Question == 4) %>%
     mutate(ShortAnswer = str_replace_all(ShortAnswer, "No, it did not affect how I ranked the program", "No effect"),
@@ -124,26 +136,28 @@ results <- filter(responses, Question == 4) %>%
     ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
     xlab("") +
-    ylab("Number of Candidates") +
-    ggtitle("MMI influence on program ranking") 
+    ylab("Number of Candidates") 
 
 print(results)
 ```
 
 ### Question 5
 
+**Where our program was ranked**
+
 ```{r question5}
 results <- filter(responses, Question == 5) %>%
     ggplot(aes(x = ordered(ShortAnswer, levels = names(sort(table(ShortAnswer), decreasing = TRUE))))) +
     geom_bar(fill = "blue") +
     xlab("") +
-    ylab("Number of Candidates") +
-    ggtitle("Where our program was ranked") 
+    ylab("Number of Candidates") 
 
 print(results)
 ```
 
 ### Question 6
+
+**Factors that caused us to be ranked lower than first**
 
 ```{r question6}
 results <- mutate(mh_factors, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
@@ -161,7 +175,7 @@ results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
     coord_polar(theta = "y") +
     xlab("") +
     ylab("") +
-    ggtitle("Factors that caused us to be ranked lower than first") +
+    ggtitle("") +
     labs(fill = "Response Category") +
     theme(axis.text.x = element_blank()) 
 
@@ -169,6 +183,8 @@ print(results)
 ```
 
 ### Question 7
+
+**Suggestions to improve the interview day**
 
 ```{r question7}
 results <- mutate(recs, ResponseType = ordered(ResponseType, levels = names(sort(table(ResponseType), decreasing = TRUE))))
@@ -186,7 +202,7 @@ results <- ggplot(data = results, aes(x = factor(1), fill = ResponseType)) +
     coord_polar(theta = "y") +
     xlab("") +
     ylab("") +
-    ggtitle("Suggestions to improve the interview day") +
+    ggtitle("") +
     labs(fill = "Response Category") +
     theme(axis.text.x = element_blank()) 
 
